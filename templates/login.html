@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <style>
+        body {
+            background-image: linear-gradient(to bottom right, #2980b9, #8e44ad);
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 40px;
+            width: 400px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            height: 45px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            background-color: #f5f5f5;
+            transition: transform 0.3s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            outline: none;
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            background-color: #8e44ad;
+            border-color: #2980b9;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #6c3483;
+            transform: scale(1.05);
+        }
+
+        .input-group-text {
+            background-color: #8e44ad;
+            color: #fff;
+            border: none;
+            border-radius: 30px 0 0 30px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #8e44ad;
+        }
+
+        .btn-secondary {
+            background-color: #3498db;
+            border-color: #2980b9;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1><i class="fas fa-sign-in-alt fa-lg mr-2"></i>Login</h1>
+        <form action="login" method="POST" id="login-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user fa-lg"></i></span>
+                    </div>
+                    <input type="text" name="username" class="form-control" placeholder="Username" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-lock fa-lg"></i></span>
+                    </div>
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt fa-lg mr-2"></i>Login</button>
+            <br><br>
+            <a href="{% url 'register' %}" class="btn btn-secondary"><i class="fas fa-user-plus fa-lg mr-2"></i>Register</a>
+        </form>
+        {% for message in messages %}
+        <div class="error-message">{{ message }}</div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var username = document.getElementsByName('username')[0].value;
+            var password = document.getElementsByName('password')[0].value;
+
+            if (username.trim() === '' || password.trim() === '') {
+                alert('Please enter a valid username and password.');
+                return;
+            }
+
+            this.submit();
+        });
+    </script>
+</body>
+</html>

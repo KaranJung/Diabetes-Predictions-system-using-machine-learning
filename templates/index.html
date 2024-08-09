@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diabetes Prediction System</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    {% load static %}
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      background: linear-gradient(90deg, #2980b9, #8e44ad);
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.8rem;
+      color: #fff;
+      position: relative;
+    }
+
+    .navbar-brand::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 50%;
+      height: 4px;
+      background-color: #ff9800;
+      transition: width 0.3s ease;
+    }
+
+    .navbar-brand:hover::after {
+      width: 100%;
+    }
+
+    .nav-link {
+      font-weight: bold;
+      color: #fff !important;
+      margin-left: 15px;
+      transition: color 0.3s ease, transform 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background-color: #ff9800;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link:hover {
+      color: #ff9800 !important;
+      transform: translateY(-3px);
+    }
+
+    .navbar-toggler-icon {
+      background-color: #fff;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, #2980b9, #8e44ad);
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .hero-section h1 {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s;
+    }
+
+    .hero-section p {
+      font-size: 22px;
+      margin-bottom: 30px;
+      animation: fadeInUp 1.5s;
+    }
+
+    .btn-try-now {
+      background-color: #ff9800;
+      color: #fff;
+      border-radius: 30px;
+      padding: 12px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-try-now:hover {
+      background-color: #e67e22;
+      transform: translateY(-3px);
+    }
+
+    /* Feature Section */
+    .feature-section {
+      padding: 70px 0;
+      text-align: center;
+    }
+
+    .feature-section h2 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 50px;
+      color: #333;
+    }
+
+    .feature-card {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-card i {
+      font-size: 50px;
+      color: #2980b9;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .feature-card p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    /* Animation */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 50px 0;
+      }
+
+      .hero-section h1 {
+        font-size: 32px;
+      }
+
+      .hero-section p {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="{% url 'home' %}">Diabetes Prediction</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+
+        <li class="nav-item">
+          <a class="nav-link btn-login" href="login"><i class="fas fa-lock"></i> Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn-register" href="register"><i class="fas fa-user-plus"></i> Register</a>
+        </li>
+           <li class="nav-item">
+          <a class="nav-link btn-login" href="about"><i class="fa-solid fa-info"></i> About Us</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="hero-section">
+    <div class="container">
+      <h1>Diabetes Prediction System</h1>
+      <p>Accurately predict your risk of diabetes with our cutting-edge machine learning model.</p>
+      <a href="login" class="btn btn-try-now">Try Now</a>
+    </div>
+  </div>
+
+  <div class="feature-section">
+    <div class="container">
+      <h2>Key Features</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="feature-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Accurate Prediction</h3>
+            <p>Our model has achieved an accuracy of 80% in predicting diabetes.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <i class="fas fa-user-shield"></i>
+            <h3>Secure and Confidential</h3>
+            <p>Your personal data is kept completely secure and confidential.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <i class="fas fa-mobile-alt"></i>
+            <h3>Responsive Design</h3>
+            <p>The website is fully responsive and optimized for all devices.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% block content %}{% endblock %}
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

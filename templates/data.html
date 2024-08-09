@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to bottom right, #2980b9, #8e44ad);
+            background-size: cover;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav h1 {
+            font-size: 2rem;
+            margin: 0;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        nav h1 span {
+            color: #f1c40f;
+        }
+
+        nav a, nav p {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        nav p {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        nav p i {
+            margin-right: 8px;
+        }
+
+        nav a.btn {
+            background-color: #e74c3c;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a.btn:hover {
+            background-color: #c0392b;
+        }
+
+        nav a:hover {
+            color: #f1c40f;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            max-width: 1200px;
+            overflow: hidden;
+            display: flex;
+            margin-top: 80px;
+            transition: transform 0.3s ease;
+        }
+
+        .form-container, .info-container {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .form-container {
+            background: linear-gradient(135deg, #8e44ad, #2980b9);
+            color: #fff;
+            border-right: 1px solid #ddd;
+        }
+
+        .form-container h2 {
+            margin-top: 0;
+            font-size: 2rem;
+            color: #f1c40f;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 8px rgba(241, 196, 15, 0.7);
+            transform: scale(1.02);
+        }
+
+        button[type="submit"], button[type="reset"] {
+            background-color: #f1c40f;
+            color: #fff;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #f39c12;
+            transform: scale(1.05);
+        }
+
+        button[type="reset"] {
+            background-color: #e74c3c;
+        }
+
+        button[type="reset"]:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+        .info-container {
+            background: #f3f4f6;
+            color: #333;
+        }
+
+        .info-container h2 {
+            margin-top: 0;
+            font-size: 2rem;
+            color: #2980b9;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-container p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .info-container p strong {
+            color: #8e44ad;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .form-container {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1><span>Diabetes</span> Prediction</h1>
+        <div>
+            <a href="/" class="btn btn-danger btn-sm">{{ user.first_name|upper }} || Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-container">
+            <h2>Diabetes Prediction Form</h2>
+            <form action="predict" method="post">
+                {% csrf_token %}
+                <label for="pregnancies">Pregnancies</label>
+                <input type="text" id="pregnancies" name="pregnancies" placeholder="Number of Pregnancies / Male = 0" required>
+
+                <label for="glucose">Glucose</label>
+                <input type="text" id="glucose" name="glucose" placeholder="Plasma Glucose Concentration (mg/dL)" required>
+
+                <label for="bloodpressure">Blood Pressure</label>
+                <input type="text" id="bloodpressure" name="bloodpressure" placeholder="Diastolic Blood Pressure (mmHg)" required>
+
+                <label for="skinthickness">Skin Thickness</label>
+                <input type="text" id="skinthickness" name="skinthickness" placeholder="Triceps Skin Fold Thickness (mm)" required>
+
+                <label for="insulin">Insulin</label>
+                <input type="text" id="insulin" name="insulin" placeholder="2-Hour Serum Insulin (mu U/ml)" required>
+
+                <label for="bmi">BMI</label>
+                <input type="text" id="bmi" name="bmi" placeholder="Body Mass Index (kg/m^2)" required>
+
+                <label for="diabetespedigreefunction">Diabetes Pedigree Function</label>
+                <input type="text" id="diabetespedigreefunction" name="diabetespedigreefunction" placeholder="Diabetes Pedigree Function" required>
+
+                <label for="age">Age</label>
+                <input type="text" id="age" name="age" placeholder="Age (years)" required>
+
+                <button type="submit">Predict</button>
+                <button type="reset">Reset</button>
+            </form>
+        </div>
+
+        <div class="info-container">
+            <h2>Understanding the Inputs</h2>
+            <p><strong>Pregnancies:</strong> The number of times the patient has been pregnant.</p>
+            <p><strong>Glucose:</strong> The plasma glucose concentration in mg/dL.</p>
+            <p><strong>Blood Pressure:</strong> The diastolic blood pressure in mmHg.</p>
+            <p><strong>Skin Thickness:</strong> The triceps skin fold thickness in mm.</p>
+            <p><strong>Insulin:</strong> The 2-hour serum insulin in mu U/ml.</p>
+            <p><strong>BMI:</strong> The body mass index in kg/m<sup>2</sup>.</p>
+            <p><strong>Diabetes Pedigree Function:</strong> A function that scores the likelihood of diabetes based on family history.</p>
+            <p><strong>Age:</strong> The age of the patient in years.</p>
+        </div>
+    </div>
+</body>
+</html>
